@@ -12,10 +12,6 @@ PKG_SOURCE:=$(PKG_NAME)--$(PKG_VERSION).tar.bz2
 PKG_HASH:=826d372cdfdf1a0a0163b0cf465135d720707afd776664424eefadc091a38b9e
 PKG_MIRROR_HASH:=826d372cdfdf1a0a0163b0cf465135d720707afd776664424eefadc091a38b9e
 
-PKG_SOURCE_PROTO:=git
-PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
-PKG_SOURCE_VERSION:=$(PKG_REV)
-
 PKG_FIXUP:=autoreconf
 
 include $(INCLUDE_DIR)/package.mk
@@ -133,34 +129,34 @@ ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor		$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
 	$(CP)			$(FILES_DIR)/cgminer.avalon8.config		$(1)/etc/config/cgminer
-	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade		$(1)/usr/bin/mmupgrade
+	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON850),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor		$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
 	$(CP)			$(FILES_DIR)/cgminer.avalon850.config		$(1)/etc/config/cgminer
-	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade		$(1)/usr/bin/mmupgrade
+	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor		$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
-	$(CP)			$(FILES_DIR)/cgminer.avalon8_lp.config	$(1)/etc/config/cgminer
-	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade		$(1)/usr/bin/mmupgrade
+	$(CP)			$(FILES_DIR)/cgminer.avalon8_lp.config		$(1)/etc/config/cgminer
+	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON9),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon9-monitor		$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon9.init		$(1)/etc/init.d/cgminer
 	$(CP)			$(FILES_DIR)/cgminer.avalon9.config		$(1)/etc/config/cgminer
-	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon9-upgrade		$(1)/usr/bin/mmupgrade
+	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon9-upgrade			$(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON911),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon9-monitor		$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon9.init		$(1)/etc/init.d/cgminer
 	$(CP)			$(FILES_DIR)/cgminer.avalon9.config		$(1)/etc/config/cgminer
-	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon9-upgrade		$(1)/usr/bin/mmupgrade
+	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon9-upgrade			$(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALONLC3),y)
-	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalonlc3-monitor	$(1)/usr/bin/cgminer-monitor
+	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalonlc3-monitor		$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalonlc3.init		$(1)/etc/init.d/cgminer
 	$(CP)			$(FILES_DIR)/cgminer.avalonlc3.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalonlc3-upgrade		$(1)/usr/bin/mmupgrade

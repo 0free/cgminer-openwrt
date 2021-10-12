@@ -2,14 +2,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=cgminer
-PKG_VERSION:=main
+PKG_VERSION:=4.11.1
 PKG_RELEASE:=1
 PKG_INSTALL:=1
 
-PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/cgminer-4.11.1.git
+PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/cgminer.git
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_HASH:=fab86431b481b129db39e5a968369ff24c5b6a3c9191425293f8388bc0aa19b4
-#PKG_HASH:=826d372cdfdf1a0a0163b0cf465135d720707afd776664424eefadc091a38b9e
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_SUBDIR:=$(PKG_NAME)-$(PKG_VERSION)
@@ -44,7 +43,7 @@ define Package/cgminer/config
 	endmenu
 endef
 
-TARGET_CFLAGS += 
+TARGET_CFLAGS += -fcommon
 TARGET_LDFLAGS += -L$(STAGING_DIR)/usr/lib
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)

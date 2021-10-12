@@ -43,7 +43,7 @@ define Package/cgminer/config
 	endmenu
 endef
 
-TARGET_CFLAGS += -fcommon
+TARGET_CFLAGS += 
 TARGET_LDFLAGS += -L$(STAGING_DIR)/usr/lib
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
@@ -83,6 +83,10 @@ endif
 ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
 	CONFIGURE_ARGS += --without-curses
 endif
+
+define Build/Prepare
+	$(cp) $(STAGING_DIR)/usr/lib/libz.so.1 $(BUILD_DIR)/$(PKG_SOURCE_SUBDIR)/libz.so.1
+endef
 
 define Build/Compile
 	$(call Build/Compile/Default)

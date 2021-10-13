@@ -25,7 +25,7 @@ define Package/$(PKG_NAME)
 	ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
 		DEPENDS:=+libcurl +libpthread +jansson +udev +libusb-1.0
 	else
-		DEPENDS:=+libcurl +libpthread +jansson +udev +libusb-1.0 +libncurses
+		DEPENDS:=+libcurl +libpthread +jansson +libusb-1.0 +libncurses
 	endif
 endef
 

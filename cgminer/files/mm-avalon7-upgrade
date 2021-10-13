@@ -5,10 +5,10 @@ cd /tmp
 if [ ! -f "$FIRMWARE" ]; then
         exit
 fi
-# make sure there is only one mm-tools is running
-MM_TOOLS_COUNT=`pidof mm-tools | wc -w`
-if [ "$MM_TOOLS_COUNT" -ne "0" ]; then
-	killall -9 mm-tools
+# make sure there is only one mm-cgminer is running
+MM_CGMINER_COUNT=`pidof mm-cgminer | wc -w`
+if [ "$MM_CGMINER_COUNT" -ne "0" ]; then
+	killall -9 mm-cgminer
 	killall -9 mmupgrade
 	exit
 fi
@@ -16,7 +16,7 @@ fi
 /etc/init.d/cgminer stop
 # wait cgminer stop finish
 sleep 2
-mm-tools
+mm-cgminer
 # wait mm reboot
 sleep 25
 /etc/init.d/cgminer start

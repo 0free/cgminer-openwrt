@@ -18,8 +18,8 @@ PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/cgminer
-	TITLE:=cgminer
+define Package/$(PKG_NAME)
+	TITLE:=$(PKG_NAME)
 	SECTION:=utils
 	CATEGORY:=Utilities
 	ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
@@ -29,13 +29,13 @@ define Package/cgminer
 	endif
 endef
 
-define Package/cgminer/description
+define Package/$(PKG_NAME)/description
 Cgminer is a multi-threaded multi-pool GPU, FPGA and CPU miner with ATI GPU
 monitoring, (over)clocking and fanspeed support for bitcoin and derivative
 coins.
 endef
 
-define Package/cgminer/config
+define Package/$(PKG_NAME)/config
 	menu "Configuration"
 		depends on PACKAGE_cgminer
 		source "$(SOURCE)/Config.in"
@@ -88,7 +88,7 @@ define Build/Compile
 	(cd $(PKG_BUILD_DIR) && $(TARGET_CC) -Icompat/jansson-2.13.1/src `pkg-config --cflags libusb-1.0` api-example.c -o cgminer-api;)
 endef
 
-define Package/cgminer/install
+define Package/$(PKG_NAME)/install
 	$(INSTALL_DIR)		$(1)/usr/bin
 	$(INSTALL_DIR)		$(1)/usr/lib
 	$(INSTALL_DIR)		$(1)/etc/init.d
@@ -167,4 +167,4 @@ endif
 
 endef
 
-$(eval $(call BuildPackage,cgminer))
+$(eval $(call BuildPackage,$(PKG_NAME)))

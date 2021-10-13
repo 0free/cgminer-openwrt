@@ -5,8 +5,8 @@ PKG_NAME:=cgminer
 PKG_VERSION:=4.11.1
 PKG_RELEASE:=1
 
-PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/cgminer.git
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/cgminer.git
 PKG_HASH:=fab86431b481b129db39e5a968369ff24c5b6a3c9191425293f8388bc0aa19b4
 
 PKG_SOURCE_PROTO:=git
@@ -37,8 +37,8 @@ endef
 
 define Package/cgminer/config
 	menu "Configuration"
-	depends on PACKAGE_cgminer
-	source "$(SOURCE)/Config.in"
+		depends on PACKAGE_cgminer
+		source "$(SOURCE)/Config.in"
 	endmenu
 endef
 
@@ -137,7 +137,7 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON850),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
-	$(CP)				$(FILES_DIR)/cgminer.avalon850.config		$(1)/etc/config/cgminer
+	$(CP)				$(FILES_DIR)/cgminer.avalon850.config	$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)

@@ -91,22 +91,21 @@ define Package/$(PKG_NAME)/install
 
 	$(INSTALL_DIR)		$(1)/usr/bin
 	$(INSTALL_DIR)		$(1)/usr/lib
-	$(INSTALL_DIR)		$(1)/etc/init.d
 	$(INSTALL_DIR)		$(1)/etc/config
+	$(INSTALL_DIR)		$(1)/etc/init.d
 	$(INSTALL_DIR)		$(1)/etc/uci-defaults
 
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/cgminer-api			$(1)/usr/bin
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/usr/bin/cgminer		$(1)/usr/bin
 
-	$(CP)		./root-files/etc/rc.local						$(1)/etc/config
-	$(CP)		./root-files/etc/sysctl.conf					$(1)/etc/config
+	$(INSTALL_DATA)		./root-files/etc/uci-defaults/01-cgminer	$(1)/etc/uci-defaults
+
+	$(CP)		./root-files/etc/rc.local						$(1)/etc
+	$(CP)		./root-files/etc/sysctl.conf					$(1)/etc
 
 	$(CP)		./root-files/etc/config/dhcp					$(1)/etc/config
 	$(CP)		./root-files/etc/config/firewall				$(1)/etc/config
 	$(CP)		./root-files/etc/config/network					$(1)/etc/config
-	$(CP)		./root-files/etc/uci-defaults/01-cgminer		$(1)/etc/uci-defaults
-
-#	$(CP)				$(STAGING_DIR)/usr/lib/libz.so*			$(1)/usr/lib
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon1-monitor	$(1)/usr/bin/cgminer-monitor

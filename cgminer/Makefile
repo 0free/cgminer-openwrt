@@ -89,11 +89,14 @@ endef
 
 define Package/$(PKG_NAME)/install
 
+	$(INSTALL_DIR)		$(1)/root
 	$(INSTALL_DIR)		$(1)/usr/bin
 	$(INSTALL_DIR)		$(1)/usr/lib
 	$(INSTALL_DIR)		$(1)/etc/config
 	$(INSTALL_DIR)		$(1)/etc/init.d
 	$(INSTALL_DIR)		$(1)/etc/uci-defaults
+
+	$(INSTALL_BIN)		./root-files/root/hasher.bit			$(1)/root
 
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/cgminer-api			$(1)/usr/bin
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/usr/bin/cgminer		$(1)/usr/bin

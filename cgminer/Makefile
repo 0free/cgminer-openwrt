@@ -5,7 +5,7 @@ PKG_NAME:=cgminer
 PKG_VERSION:=4.11.1
 PKG_RELEASE:=1
 
-PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
+PKG_SOURCE:=cgminer-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=https://github.com/SaifAlSubhi/cgminer.git
 PKG_HASH:=fab86431b481b129db39e5a968369ff24c5b6a3c9191425293f8388bc0aa19b4
 
@@ -17,8 +17,8 @@ PKG_INSTALL:=1
 
 include $(INCLUDE_DIR)/package.mk
 
-define Package/$(PKG_NAME)
-	TITLE:=$(PKG_NAME)
+define Package/cgminer
+	TITLE:=cgminer
 	SECTION:=utils
 	CATEGORY:=Utilities
 	ifeq ($(CONFIG_TARGET_brcm2708_RaspberryPi),)
@@ -28,13 +28,13 @@ define Package/$(PKG_NAME)
 	endif
 endef
 
-define Package/$(PKG_NAME)/description
+define Package/cgminer/description
 Cgminer is a multi-threaded multi-pool GPU, FPGA and CPU miner with ATI GPU
 monitoring, (over)clocking and fanspeed support for bitcoin and derivative
 coins.
 endef
 
-define Package/$(PKG_NAME)/config
+define Package/cgminer/config
 	menu "Configuration"
 		depends on PACKAGE_cgminer
 		source "$(SOURCE)/Config.in"
@@ -87,7 +87,7 @@ define Build/Compile
 	(cd $(PKG_BUILD_DIR) && $(TARGET_CC) -Icompat/jansson-2.13.1/src `pkg-config --cflags libusb-1.0` api-example.c -o cgminer-api;)
 endef
 
-define Package/$(PKG_NAME)/install
+define Package/cgminer/install
 
 	$(INSTALL_DIR)		$(1)/root
 	$(INSTALL_DIR)		$(1)/usr/bin
@@ -102,13 +102,6 @@ define Package/$(PKG_NAME)/install
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/usr/bin/cgminer		$(1)/usr/bin
 
 	$(INSTALL_DATA)		./root-files/etc/uci-defaults/01-cgminer	$(1)/etc/uci-defaults
-
-#	$(CP)		./root-files/etc/rc.local						$(1)/etc
-#	$(CP)		./root-files/etc/sysctl.conf					$(1)/etc
-
-#	$(CP)		./root-files/etc/config/dhcp					$(1)/etc/config
-#	$(CP)		./root-files/etc/config/firewall				$(1)/etc/config
-#	$(CP)		./root-files/etc/config/network					$(1)/etc/config
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon1-monitor	$(1)/usr/bin/cgminer-monitor
@@ -179,4 +172,27 @@ endif
 
 endef
 
-$(eval $(call BuildPackage,$(PKG_NAME)))
+define Package/cgminer/postinst
+
+#!/bin/bash
+cat > ./root-files/etc/avalon_version << EOL
+Avalon Firmware
+Machine: $AVA_MACHINE
+Date: $DATE
+luci: $LUCI_GIT_VERSION
+cgminer: $GIT_VERSION
+cgminer-packages: $OW_GIT_VERSION
+cat << EOL
+
+	$(CP)		./root-files/etc/avalon_version					$(1)/etc
+
+#	$(CP)		./root-files/etc/rc.local						$(1)/etc
+#	$(CP)		./root-files/etc/sysctl.conf					$(1)/etc
+
+#	$(CP)		./root-files/etc/config/dhcp					$(1)/etc/config
+#	$(CP)		./root-files/etc/config/firewall				$(1)/etc/config
+#	$(CP)		./root-files/etc/config/network					$(1)/etc/config
+
+endef
+
+$(eval $(call BuildPackage,cgminer))

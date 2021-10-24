@@ -25,7 +25,7 @@ define Package/cgminer
 		DEPENDS:=+libcurl +libpthread +jansson +udev +libusb-1.0
 	else
 		DEPENDS:=+libcurl +libpthread +jansson +udev +libusb-1.0 +libncurses
-	endif
+endif
 endef
 
 define Package/cgminer/description
@@ -121,48 +121,56 @@ ifeq ($(CONFIG_CGMINER_AVALON4),y)
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon4.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon4-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON6),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon6-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon6.init		$(1)/etc/init.d/cgminer
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon6.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon6-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON7),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon7-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon7.init		$(1)/etc/init.d/cgminer
 	$(CP)				$(FILES_DIR)/cgminer.avalon7.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon7-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
 	$(CP)				$(FILES_DIR)/cgminer.avalon8.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON850),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon850.config	$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON8_LP),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon8_lp.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON9),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon9-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon9.init		$(1)/etc/init.d/cgminer
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon9.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon9-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALON911),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon9-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon9.init		$(1)/etc/init.d/cgminer
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon9.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon9-upgrade			$(1)/usr/bin/mmupgrade
 endif
+
 ifeq ($(CONFIG_CGMINER_AVALONLC3),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalonlc3-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalonlc3.init		$(1)/etc/init.d/cgminer
@@ -170,28 +178,14 @@ ifeq ($(CONFIG_CGMINER_AVALONLC3),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalonlc3-upgrade		$(1)/usr/bin/mmupgrade
 endif
 
-endef
+	$(CP)	./root-files/etc/avalon_version		$(1)/etc
 
-define Package/cgminer/postinst
-
-#!/bin/bash
-cat > ./root-files/etc/avalon_version << EOL
-Avalon Firmware
-Machine: $AVA_MACHINE
-Date: $DATE
-luci: $LUCI_GIT_VERSION
-cgminer: $GIT_VERSION
-cgminer-packages: $OW_GIT_VERSION
-cat << EOL
-
-	$(CP)		./root-files/etc/avalon_version					$(1)/etc
-
-#	$(CP)		./root-files/etc/rc.local						$(1)/etc
-#	$(CP)		./root-files/etc/sysctl.conf					$(1)/etc
-
-#	$(CP)		./root-files/etc/config/dhcp					$(1)/etc/config
-#	$(CP)		./root-files/etc/config/firewall				$(1)/etc/config
-#	$(CP)		./root-files/etc/config/network					$(1)/etc/config
+	echo "Avalon Firmware"						>> $(1)/etc/avalon_version
+	echo "Machine: $AVA_MACHINE"				>> $(1)/etc/avalon_version
+	echo "Date: $DATE"							>> $(1)/etc/avalon_version
+	echo "luci: $LUCI_GIT_VERSION"				>> $(1)/etc/avalon_version
+	echo "cgminer: $GIT_VERSION"				>> $(1)/etc/avalon_version
+	echo "cgminer-packages: $OW_GIT_VERSION"	>> $(1)/etc/avalon_version
 
 endef
 

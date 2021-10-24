@@ -1,4 +1,4 @@
-
+<< EOL
 Avalon Firmware for $AVA_MACHINE - $DATE
     luci: $LUCI_GIT_VERSION
     cgminer: $GIT_VERSION

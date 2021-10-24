@@ -180,12 +180,12 @@ endif
 
 	$(CP)	./root-files/etc/avalon_version		$(1)/etc
 
-	echo "Avalon Firmware"						>> $(1)/etc/avalon_version
-	echo "Machine: $AVA_MACHINE"				>> $(1)/etc/avalon_version
-	echo "Date: $DATE"							>> $(1)/etc/avalon_version
-	echo "luci: $LUCI_GIT_VERSION"				>> $(1)/etc/avalon_version
-	echo "cgminer: $GIT_VERSION"				>> $(1)/etc/avalon_version
-	echo "cgminer-packages: $OW_GIT_VERSION"	>> $(1)/etc/avalon_version
+	echo "Avalon Firmware"							>> $(1)/etc/avalon_version
+	echo "Machine: " $(AVA_MACHINE)					>> $(1)/etc/avalon_version
+	echo "Date: " $(DATE)							>> $(1)/etc/avalon_version
+	echo "luci: " $(LUCI_GIT_VERSION)				>> $(1)/etc/avalon_version
+	echo "cgminer: " $(GIT_VERSION)					>> $(1)/etc/avalon_version
+	echo "cgminer-packages: " $(OW_GIT_VERSION)		>> $(1)/etc/avalon_version
 
 endef
 

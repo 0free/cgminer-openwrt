@@ -89,14 +89,13 @@ endef
 
 define Package/cgminer/install
 
-	$(INSTALL_DIR)		$(1)/root
 	$(INSTALL_DIR)		$(1)/usr/bin
 	$(INSTALL_DIR)		$(1)/usr/lib
 	$(INSTALL_DIR)		$(1)/etc/config
 	$(INSTALL_DIR)		$(1)/etc/init.d
 	$(INSTALL_DIR)		$(1)/etc/uci-defaults
 
-	$(INSTALL_BIN)		./root-files/root/hasher.bit			$(1)/root
+	$(INSTALL_BIN)		./root-files/root/hasher.bit			$(1)
 
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/cgminer-api			$(1)/usr/bin
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/usr/bin/cgminer		$(1)/usr/bin
@@ -180,7 +179,6 @@ endif
 
 	$(CP)	./root-files/etc/avalon_version		$(1)/etc
 
-	echo "Avalon Firmware"							>> $(1)/etc/avalon_version
 	echo "Machine: " $(AVA_MACHINE)					>> $(1)/etc/avalon_version
 	echo "Date: " $(DATE)							>> $(1)/etc/avalon_version
 	echo "luci: " $(LUCI_GIT_VERSION)				>> $(1)/etc/avalon_version

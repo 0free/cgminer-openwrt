@@ -89,18 +89,20 @@ endef
 
 define Package/cgminer/install
 
+	$(INSTALL_DIR)		$(1)/root
 	$(INSTALL_DIR)		$(1)/usr/bin
 	$(INSTALL_DIR)		$(1)/usr/lib
 	$(INSTALL_DIR)		$(1)/etc/config
 	$(INSTALL_DIR)		$(1)/etc/init.d
 	$(INSTALL_DIR)		$(1)/etc/uci-defaults
 
-	$(INSTALL_BIN)		./root-files/root/hasher.bit			$(1)
+	$(INSTALL_BIN)		./root-files/root/hasher.bit			$(1)/root
 
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/cgminer-api			$(1)/usr/bin
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/usr/bin/cgminer		$(1)/usr/bin
 
 	$(INSTALL_DATA)		./root-files/etc/uci-defaults/01-cgminer	$(1)/etc/uci-defaults
+	$(CP)				./root-files/etc/avalon_version				$(1)/etc
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon1-monitor	$(1)/usr/bin/cgminer-monitor
@@ -176,14 +178,6 @@ ifeq ($(CONFIG_CGMINER_AVALONLC3),y)
 	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalonlc3.config	$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalonlc3-upgrade		$(1)/usr/bin/mmupgrade
 endif
-
-	$(CP)	./root-files/etc/avalon_version		$(1)/etc
-
-	echo "Machine: " $(AVA_MACHINE)					>> $(1)/etc/avalon_version
-	echo "Date: " $(DATE)							>> $(1)/etc/avalon_version
-	echo "luci: " $(LUCI_GIT_VERSION)				>> $(1)/etc/avalon_version
-	echo "cgminer: " $(GIT_VERSION)					>> $(1)/etc/avalon_version
-	echo "cgminer-packages: " $(OW_GIT_VERSION)		>> $(1)/etc/avalon_version
 
 endef
 

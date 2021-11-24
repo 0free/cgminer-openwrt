@@ -96,12 +96,12 @@ define Package/cgminer/install
 	$(INSTALL_DIR)		$(1)/etc/init.d
 	$(INSTALL_DIR)		$(1)/etc/uci-defaults
 
-	$(INSTALL_BIN)		./root-files/root/hasher.bit			$(1)/root
+	$(INSTALL_DATA)		./root-files/root/hasher.bit			$(1)/root
 
 	$(INSTALL_BIN)		$(PKG_BUILD_DIR)/cgminer-api			$(1)/usr/bin
 	$(INSTALL_BIN)		$(PKG_INSTALL_DIR)/usr/bin/cgminer		$(1)/usr/bin
 
-	$(INSTALL_DATA)		./root-files/etc/uci-defaults/01-cgminer	$(1)/etc/uci-defaults
+	$(INSTALL_CONF)		./root-files/etc/uci-defaults/01-cgminer	$(1)/etc/uci-defaults
 	$(CP)				./root-files/etc/avalon_version				$(1)/etc
 
 ifeq ($(CONFIG_CGMINER_AVALON1),y)
@@ -133,14 +133,14 @@ endif
 ifeq ($(CONFIG_CGMINER_AVALON7),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon7-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon7.init		$(1)/etc/init.d/cgminer
-	$(CP)				$(FILES_DIR)/cgminer.avalon7.config		$(1)/etc/config/cgminer
+	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon7.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon7-upgrade			$(1)/usr/bin/mmupgrade
 endif
 
 ifeq ($(CONFIG_CGMINER_AVALON8),y)
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer-avalon8-monitor	$(1)/usr/bin/cgminer-monitor
 	$(INSTALL_BIN)		$(FILES_DIR)/cgminer.avalon8.init		$(1)/etc/init.d/cgminer
-	$(CP)				$(FILES_DIR)/cgminer.avalon8.config		$(1)/etc/config/cgminer
+	$(INSTALL_CONF)		$(FILES_DIR)/cgminer.avalon8.config		$(1)/etc/config/cgminer
 	$(INSTALL_BIN)		$(FILES_DIR)/mm-avalon8-upgrade			$(1)/usr/bin/mmupgrade
 endif
 

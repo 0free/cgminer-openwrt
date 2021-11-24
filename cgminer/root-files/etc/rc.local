@@ -1,10 +1,4 @@
-
 # Load hasher bitstream
 [ -e /dev/xdevcfg ] && cat /root/hasher.bit > /dev/xdevcfg
 
-# Close ipv6
-sleep 3
-sysctl -p
-
 exit 0
-

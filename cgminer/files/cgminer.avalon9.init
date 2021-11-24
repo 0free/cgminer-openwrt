@@ -1,10 +1,11 @@
 #!/bin/sh /etc/rc.common
-START=99
 
-APP=cgminer
-PID_FILE=/var/run/$APP.pid
+START=99
+APP=/usr/bin/cgminer
+PID=/var/run/cgminer.pid
 
 start() {
+
 	local _pool1url
 	local _pool1user
 	local _pool1pw
@@ -67,7 +68,6 @@ start() {
 	NTP_POOL="-p 0.openwrt.pool.ntp.org -p 1.openwrt.pool.ntp.org  -p 3.openwrt.pool.ntp.org -p 4.openwrt.pool.ntp.org"
 	ASIA="-p 1.cn.pool.ntp.org -p 3.asia.pool.ntp.org -p 2.asia.pool.ntp.org"
 
-	# _ntp_enable: openwrt, asia, globle
 	if [ "$_ntp_enable" == "asia" ]; then
 	    NTP_POOL="${ASIA}"
 	fi
@@ -81,18 +81,18 @@ start() {
 	    touch /tmp/cgminer-ntpd-done
 	fi
 
-        # Make sure udevd run before cgminer start
-        UDEVDCNT=`pidof udevd | wc -w`
-        if [ "$UDEVDCNT" == "0" ]; then
-                mkdir -p /run
-                udevd --daemon
-        fi
+    # run udevd before cgminer start
+    UDEVDCNT=`pidof udevd | wc -w`
+    if [ "$UDEVDCNT" == "0" ]; then
+            mkdir -p /run
+            udevd --daemon
+    fi
 
 	sleep 2
-	start-stop-daemon -S -x $APP -p $PID_FILE -m -b -- $PARAMS
+	start-stop-daemon -S -x $APP -p $PID -m -b -- $PARAMS
 }
 
 stop() {
-	start-stop-daemon -K -n $APP -p $PID_FILE -s TERM
+	start-stop-daemon -K -n $APP -p $PID -s TERM
 	sleep 2
 }
